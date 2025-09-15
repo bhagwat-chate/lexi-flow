@@ -29,15 +29,15 @@
       "secrets": [
         {
           "name": "OPENAI_API_KEY",
-          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:961341542746:secret:lexiflow_secrets-oyJvDE:OPENAI_API_KEY"
+          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:961341542746:secret:lexiflow_secrets-oyJvDE"
         },
         {
           "name": "LLM_PROVIDER",
-          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:961341542746:secret:lexiflow_secrets-oyJvDE:LLM_PROVIDER"
+          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:961341542746:secret:lexiflow_secrets-oyJvDE"
         },
         {
           "name": "EMBEDDING_PROVIDER",
-          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:961341542746:secret:lexiflow_secrets-oyJvDE:EMBEDDING_PROVIDER"
+          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:961341542746:secret:lexiflow_secrets-oyJvDE"
         }
       ],
       "logConfiguration": {

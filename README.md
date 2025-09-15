@@ -1,85 +1,125 @@
-# 📄 Document Portal – Intelligent PDF Chat, Analysis & Comparison Platform
+# 📄 Lexi-flow
+Intelligent PDF Chat, Analysis & Comparison Platform  
 
-[![Python](https://img.shields.io/badge/Python-3.11.7-blue.svg)](https://www.python.org/downloads/release/python-3117/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-
----
-
-## 🚀 Overview
-
-**Document Portal** is a production-grade GenAI platform designed to **analyze**, **compare**, and **converse** over PDF documents using state-of-the-art LLMs and retrieval-augmented generation (RAG) pipelines.
-
-This platform enables enterprises, legal teams, researchers, and policy analysts to:
-- 🧠 Extract insights from complex documents
-- 🔍 Track changes between document versions
-- 💬 Chat intelligently with single or multiple PDFs
-- ⚙️ Configure and switch between multiple LLMs and embedding models dynamically
+[![Python](https://img.shields.io/badge/Python-3.11.7-blue.svg)](https://www.python.org/downloads/release/python-3117/)  
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)  
+[![AWS](https://img.shields.io/badge/Deployed%20on-AWS%20Fargate-orange)](https://aws.amazon.com/fargate/)  
+[![RAG](https://img.shields.io/badge/RAG-Powered-blueviolet)]()  
 
 ---
 
-## 🧠 Core Features
+## Overview  
 
-| Feature                 | Description                                                                 |
-|-------------------------|-----------------------------------------------------------------------------|
-| 📂 `document_analyzer`  | Extracts metadata such as title, author, pages, and a concise summary       |
-| 🆚 `document_compare`   | Compares two PDF documents and identifies key changes or differences         |
-| 💬 `single_document_chat` | Query and chat over a single PDF document using semantic search + LLM       |
-| 🗂️ `multi_document_chat` | Chat with multiple uploaded PDFs contextually via top-k retrieval            |
+**Lexi-flow** is a **production-grade Generative AI system** for **intelligent analysis, comparison, and conversational search over PDF documents**.  
 
-> ⚠️ **Currently Supported Format**: `.pdf` only  
-> 🧩 Future formats (docx, txt, OCR scans) will be added in upcoming versions.
+It combines **Retrieval-Augmented Generation (RAG)** pipelines, **multi-LLM orchestration**, and **enterprise-ready AWS deployment** to help:  
 
----
+- Extract insights from large, complex documents  
+- Track changes across document versions  
+- Chat with **single or multiple PDFs**  
+- Dynamically switch between **OpenAI, Google Gemini, Groq** models  
 
-## ⚙️ Tech Stack
-
-| Layer         | Technology                                      |
-|---------------|--------------------------------------------------|
-| Language      | Python 3.11.7                                    |
-| Core Logic    | LangChain, Pydantic                              |
-| LLMs          | OpenAI GPT-4o, Google Gemini, Groq DeepSeek      |
-| Embeddings    | OpenAI `text-embedding-3-small`, Google `004`    |
-| Vector Store  | Qdrant                                           |
-| Storage       | AWS S3 (for production), Local Disk (for dev)    |
-| Deployment    | Docker, AWS EC2, FastAPI, CloudWatch             |
+**Target Users:** Legal teams, compliance officers, researchers, policy analysts, and enterprises.  
 
 ---
 
-## 📁 Project Structure
+## Core Features  
+
+| Feature                  | Description                                                                             |
+|--------------------------|-----------------------------------------------------------------------------------------|
+| `document_analyzer`     | Extracts metadata (title, author, pages, structured summary)                            |
+| `document_compare`     | Compares PDFs and highlights key changes/differences                                    |
+| `document_chat` | Semantic search + LLM chat over single or multiple PDFs with contextual top-k retrieval |
+| Configurable LLMs     | Switch LLMs/embeddings via YAML without code changes                                    |
+| AWS Deployment Ready  | **ECR + ECS (Fargate) + S3 + Secrets Manager + CloudWatch** integration                 |
+
+> ⚠️ Supported Format: `.pdf` only  
+> 🧩 Extendable to: `HTML`, `YAML`, `.docx`, `.txt`, `CSV`, OCR-based scanned documents etc  
+
+---
+
+## ⚙️ Tech Stack  
+
+| Layer             | Technology                                                                                       |
+|-------------------|--------------------------------------------------------------------------------------------------|
+| Language          | Python 3.11.7                                                                                    |
+| Framework         | FastAPI, LangChain v0.3, Pydantic                                                                |
+| LLMs              | OpenAI GPT-4o, Google Gemini 2.0 Flash, Groq DeepSeek                                            |
+| Embeddings        | OpenAI `text-embedding-3-small`, Google `text-embedding-004`                                     |
+| Vector Store      | Implemented with FAISS, easily extensible to other vector databases such as Qdrant, Pinecone etc |
+| Storage           | AWS S3 (prod), Local Disk (dev)                                                                  |
+| Deployment        | **ECR + ECS (Fargate) + Secrets Manager + CloudWatch** (prod), Docker (dev)                      |
+| Monitoring        | AWS CloudWatch (logs, metrics, alarms)                                                           |
+
+---
+
+## 📁 Project Structure  
 
 ```
-document_portal/
-├── main.py
-├── test.py
-├── .env
-├── configs/
-│   └── config.yaml
-├── src/
-│   └── document_analyzer/
-│       ├── data_ingestion.py
-│       ├── analyzer.py
-│       ├── compare.py
-│       ├── chat_single.py
-│       ├── chat_multi.py
-├── utils/
-│   ├── config_loader.py
-│   ├── logger/
-│   │   └── custom_logger.py
-│   └── exception/
-│       └── custom_exception.py
-├── data/
-│   └── document_analysis/
-├── logs/
-├── requirements.txt
+├── .dockerignore
+├── .github
+│   └── workflows
+│       ├── aws.yml
+│       ├── ci.yaml
+│       ├── task_definition.json
+│       └── template.yml
+├── .gitignore
 ├── Dockerfile
-└── README.md
-```
+├── README.md
+├── api
+│   └── main.py
+├── config
+│   └── config.yaml
+├── data
+│   ├── document_analysis
+│   ├── document_compare
+│   ├── multi_doc_chat
+│   └── single_document_chat
+├── exception
+│   └── custom_exception.py
+├── git_tree.py
+├── logger
+│   └── custom_logger.py
+├── model
+│   └── models.py
+├── notebook
+│   ├── exception_exoeriment.ipynb
+│   └── experiment.ipynb
+├── prompt
+│   └── prompt_library.py
+├── requirements.txt
+├── settings.json
+├── src
+│   ├── document_analyzer
+│   │   └── data_analysis.py
+│   ├── document_chat
+│   │   └── retrieval.py
+│   ├── document_compare
+│   │   └── document_comparator.py
+│   └── document_ingestion
+│       └── data_ingestion.py
+├── static
+│   └── style.css
+├── templates
+│   └── index.html
+├── test.py
+├── tests
+│   └── test_unit_case.py
+├── utils
+│   ├── config_loader.py
+│   ├── document_ops.py
+│   ├── file_io.py
+│   ├── load_env_secrets.py
+│   └── model_loader.py
+└── versions.py
+
+```  
 
 ---
 
-## 🔧 Configuration – `config.yaml`
+## 🔧 Configuration – `config.yaml`  
 
-### ✅ Embedding Models
+### ✅ Embedding Models  
 
 ```yaml
 embedding_model:
@@ -90,11 +130,9 @@ embedding_model:
   openai:
     provider: "openai"
     model_name: "text-embedding-3-small"
-```
+```  
 
----
-
-### 🧠 LLM Models
+### 🧠 LLM Models  
 
 ```yaml
 llm:
@@ -115,142 +153,136 @@ llm:
     model_name: "gpt-4o"
     temperature: 0.0
     max_output_tokens: 2048
-```
+```  
 
----
-
-### 🔁 Retriever
+### 🔁 Retriever  
 
 ```yaml
 retriever:
   top_k: 10
-```
+```  
 
----
-
-### 📂 Qdrant Vector Store
+### 📂 Qdrant Vector Store  
 
 ```yaml
 qdrant_db:
   host: "localhost"
-  port: 6333
-  collection_name: "document_portal"
-```
+  port: 8080
+  collection_name: "lexiflow"
+```  
 
 ---
 
-## 📦 Environment Variables – `.env`
+## Environment Variables – `.env`  
 
 ```dotenv
 OPENAI_API_KEY=your_openai_api_key
 GOOGLE_API_KEY=your_google_api_key
 GROQ_API_KEY=your_groq_api_key
 DATA_STORAGE_PATH=./data/document_analysis
-```
+```  
 
 ---
 
-## 🧰 Usage Instructions
+## Usage Instructions  
 
-### 1️⃣ Clone and Setup
+### 1️⃣ Setup  
 
 ```bash
 git clone https://github.com/bhagwat-chate/document_portal.git
 cd document_portal
 python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+source venv/bin/activate  # Windows: venv\Scriptsctivate
 pip install -r requirements.txt
-```
+```  
 
-### 2️⃣ Configure `.env` and `config.yaml`
+### 2️⃣ Configure  
 
-> Make sure your `.env` and `configs/config.yaml` are updated with valid credentials and model configs.
+Update `.env` and `configs/config.yaml` with API keys & model configs.  
 
----
-
-### 3️⃣ Run Main Program
+### 3️⃣ Run Locally  
 
 ```bash
 python main.py
-```
+```  
 
 ---
 
-## 🐳 Docker Deployment
-
-### 🛠️ Build Docker Image
+## Docker Deployment  
 
 ```bash
+# Build Image
 docker build -t document-portal .
-```
 
-### ▶️ Run with Docker Locally
-
-```bash
+# Run Container
 docker run -p 8000:8000 --env-file .env document-portal
-```
+```  
 
 ---
 
-## ☁️ AWS Deployment Strategy
+## AWS Deployment (Production-Ready)  
 
-| Component       | Description                                                  |
-|-----------------|--------------------------------------------------------------|
-| **EC2 Instance**| Hosts the Docker container (Ubuntu + Docker + FastAPI)       |
-| **S3 Bucket**   | Stores uploaded documents per user/session                   |
-| **IAM Role**    | Fine-grained access to S3 + secrets                          |
-| **CloudWatch**  | For application-level logging and monitoring                 |
-| **API Gateway** | (Optional) External-facing HTTPS interface                   |
+| AWS Component       | Role                                                                 |
+|---------------------|----------------------------------------------------------------------|
+| **ECR**             | Container registry for image storage                                 |
+| **ECS Fargate**     | Serverless container runtime for FastAPI app                         |
+| **Secrets Manager** | Secure storage for API keys (OpenAI, Gemini, Groq)                   |
+| **S3**              | Document storage for uploads                                         |
+| **CloudWatch**      | Application logging, metrics, alarms                                 |
+| **Route 53 + ALB** (planned) | Custom domain + HTTPS + Load balancing                      |
 
----
-
-## ✅ Feature Checklist
-
-- [x] Upload + Save PDFs in session-specific folders
-- [x] Extract metadata: title, author, pages, summary
-- [x] Query documents with context-aware RAG
-- [x] Chat with one or multiple PDFs
-- [x] Configurable LLM/embedding via YAML
-- [ ] FastAPI endpoints for API integration
-- [ ] RAG evaluation with RAGAS / TruLens
-- [ ] Hallucination guardrails
-- [ ] Version comparison with visual diffs
-- [ ] Web UI (Streamlit or Next.js)
-- [ ] PDF upload to S3 bucket
+✅ Current: Deployment on ECS Fargate (HTTP)  
+🔜 Next: SSL with ALB + Route 53 + WAF, autoscaling, blue/green rollouts  
 
 ---
 
-## 📌 Future Enhancements
+## ✅ Feature Checklist  
 
-- 🔐 Role-based access control (RBAC)
-- 🧠 LLM voting / fallback logic for reliability
-- 🌍 Multilingual PDF support
-- 🧾 Structured output validation (Pydantic, JSONSchema)
-- 📈 Streamlit Dashboard + Analytics
-- ☁️ HuggingFace + Ollama + Bedrock integration
-
----
-
-## 🤝 Contributing
-
-1. Fork the repo
-2. Create a feature branch
-3. Submit a PR with description, example use case, and tests
+- [x] PDF upload + session-specific storage  
+- [x] Metadata extraction (title, author, pages, summary)  
+- [x] RAG-powered Q&A (single + multi PDF)  
+- [x] Configurable LLM/embeddings via YAML  
+- [x] Production deployment on AWS ECS Fargate  
+- [ ] FastAPI API endpoints for external apps  
+- [ ] RAG evaluation (RAGAS, TruLens)  
+- [ ] Guardrails against hallucination  
+- [ ] Visual PDF diff for comparisons  
+- [ ] Web UI (Streamlit/Next.js)  
+- [ ] Persistent storage with S3/EFS  
 
 ---
 
-## 📜 License
+## 📌 Future Enhancements  
 
-This project is licensed under the [MIT License](LICENSE).
+- 🔐 RBAC & secure multi-tenant setup  
+- 🧠 LLM fallback + voting mechanism  
+- 🌍 Multilingual PDF intelligence  
+- 🧾 JSONSchema/Pydantic validated outputs  
+- 📈 Analytics dashboard (Streamlit / Grafana)  
+- ☁️ HuggingFace + Ollama + Bedrock adapters  
 
 ---
 
-## 👨‍💻 Maintainer
+## 🤝 Contributing  
+
+1. Fork the repo  
+2. Create a feature branch  
+3. Submit PR with description, example use case, and tests  
+
+---
+
+## 📜 License  
+
+This project is licensed under the [MIT License](LICENSE).  
+
+---
+
+## 👨‍💻 Maintainer  
 
 **Bhagwat Chate**  
 AI Architect | GenAI Expert | Multi-Agent RAG | AI System Design  
-[🌐 GitHub](https://github.com/bhagwat-chate) · [💼 LinkedIn](https://www.linkedin.com/in/aimlbhagwatchate/)
+[🌐 GitHub](https://github.com/bhagwat-chate) · [💼 LinkedIn](https://www.linkedin.com/in/aimlbhagwatchate/)  
 
 ---
 
-> Built with ❤️ for scalable, compliance-aware document intelligence.
+> Built with ❤️ for **scalable, compliance-ready document intelligence**.  
